@@ -1,0 +1,23 @@
+{
+  "name": "str-webpack-plugin",
+  "version": "1.0.0",
+  "description": "str-webpack-plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whoopschat/str-webpack-plugin.git"
+  },
+  "keywords": [
+    "replace",
+    "webpack"
+  ],
+  "author": "liangmayong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whoopschat/str-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/whoopschat/str-webpack-plugin#readme"
+}
