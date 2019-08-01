@@ -17,7 +17,7 @@ function scan(src, regex) {
             if (fileStat.isDirectory()) {
                 return _scan(absFile);
             }
-            if (fileStat.isFile() && (!regex || regex.test(file.toLowerCase()))) {
+            if (fileStat.isFile() && (!regex || new RegExp(regex, 'g').test(file.toLowerCase()))) {
                 result.push(absFile);
             }
         });
@@ -68,9 +68,6 @@ function handle(options = {}) {
             content = replace(content, options.replace);
             fs.writeFileSync(`${file}`, content);
         });
-        if (options.debug) {
-            console.log('');
-        }
     }
 }
 
@@ -81,11 +78,23 @@ function pligin(options) {
 pligin.prototype.apply = function (compiler) {
     if (compiler.hooks) {
         compiler.hooks.afterEmit.tap("done", () => {
+            if (options.debug) {
+                console.log('');
+            }
             handle(this.options);
+            if (options.debug) {
+                console.log('');
+            }
         })
     } else {
         compiler.plugin('done', function () {
+            if (options.debug) {
+                console.log('');
+            }
             handle(this.options);
+            if (options.debug) {
+                console.log('');
+            }
         });
     }
 }
