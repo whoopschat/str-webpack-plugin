@@ -10,7 +10,9 @@
 ```
 
 ### Usage
-#####webpack.config.js
+
+##### webpack.config.js
+
 ```javascript
 //webpack.config.js
 var path = require('path');
