@@ -32,40 +32,40 @@ function scan(src, regex) {
     return result;
 }
 
-function replace(content, options) {
-    if (!options) {
+function replace(content, opts) {
+    if (!opts) {
         return content;
     }
-    if (options instanceof Array) {
-        options.forEach(option => {
+    if (opts instanceof Array) {
+        opts.forEach(option => {
             content = replace(content, option);
         });
-    } else if (options.form) {
-        if (options.form instanceof Array) {
-            options.form.forEach((form, index) => {
-                content = replace(content, { form, to: options.to[index] });
+    } else if (opts.form) {
+        if (opts.form instanceof Array) {
+            opts.form.forEach((form, index) => {
+                content = replace(content, { form, to: opts.to[index] });
             });
         } else {
-            let regex = new RegExp(options.form, 'g');
-            content = content.replace(regex, options.to || '');
+            let regex = new RegExp(opts.form, 'g');
+            content = content.replace(regex, opts.to || '');
         }
     }
     return content;
 }
 
-function handle(options = {}) {
-    if (options instanceof Array) {
-        options.forEach(option => {
+function handle(opts = {}) {
+    if (opts instanceof Array) {
+        opts.forEach(option => {
             handle(option);
         });
-    } else if (options.src) {
-        let files = scan(options.src, options.test);
+    } else if (opts.src) {
+        let files = scan(opts.src, opts.test);
         files.forEach(file => {
-            if (options.debug) {
+            if (opts.debug) {
                 console.log('str-webpack-plugin >>> ', file);
             }
             let content = fs.readFileSync(file, 'utf8');
-            content = replace(content, options.replace);
+            content = replace(content, opts.replace);
             fs.writeFileSync(`${file}`, content);
         });
     }
@@ -78,21 +78,21 @@ function pligin(options) {
 pligin.prototype.apply = function (compiler) {
     if (compiler.hooks) {
         compiler.hooks.afterEmit.tap("done", () => {
-            if (options.debug) {
+            if (this.options.debug) {
                 console.log('');
             }
             handle(this.options);
-            if (options.debug) {
+            if (this.options.debug) {
                 console.log('');
             }
         })
     } else {
         compiler.plugin('done', function () {
-            if (options.debug) {
+            if (this.options.debug) {
                 console.log('');
             }
             handle(this.options);
-            if (options.debug) {
+            if (this.options.debug) {
                 console.log('');
             }
         });

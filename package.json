@@ -1,6 +1,6 @@
 {
   "name": "str-webpack-plugin",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "str-webpack-plugin",
   "main": "index.js",
   "scripts": {
