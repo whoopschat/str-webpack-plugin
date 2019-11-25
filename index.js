@@ -58,7 +58,7 @@ function handle(opts = {}) {
         opts.forEach(option => {
             handle(option);
         });
-    } else if (opts.src) {
+    } else if (opts.src && fs.existsSync(opts.src)) {
         let files = scan(opts.src, opts.test);
         files.forEach(file => {
             if (opts.debug) {
